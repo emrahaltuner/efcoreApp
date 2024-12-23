@@ -1,0 +1,17 @@
+@model Kurs
+@{
+ViewData["Title"] = "Kurs Güncelleme";
+}
+
+
+<div class="form-group">
+    <form asp-controller="Kurs" asp-action="Edit" method="post">
+        <input type="hidden" asp-for="KursId">
+        <div class="mb-3">
+            <label asp-for="Baslik" class="form-label">Kurs Başlık</label>
+            <input asp-for="Baslik" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-secondary">Ekle</button>
+    </form>
+</div>
