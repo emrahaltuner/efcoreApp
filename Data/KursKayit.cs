@@ -1,4 +1,4 @@
-namespace efcoreApp.Models
+namespace efcoreApp.Data
 {
     public class KursKayit
     {

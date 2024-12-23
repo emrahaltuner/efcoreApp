@@ -1,6 +1,6 @@
 using System.Diagnostics.Contracts;
 
-namespace efcoreApp.Models
+namespace efcoreApp.Data
 {
     public class Kurs
     {
