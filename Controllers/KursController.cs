@@ -36,7 +36,11 @@ namespace efcoreApp.Controllers
             {
                 return NotFound();
             }
-            var kurs = await _context.Kurslar.FindAsync(id);
+            var kurs = await _context
+            .Kurslar
+            .Include(o => o.KursKayitlari)
+            .ThenInclude(o => o.Ogrenci)
+            .FirstOrDefaultAsync(o => o.KursId == id);
             if (kurs == null)
             {
                 return NotFound();
