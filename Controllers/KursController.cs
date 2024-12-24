@@ -1,5 +1,7 @@
 using efcoreApp.Data;
+using efcoreApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -15,11 +17,12 @@ namespace efcoreApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var kurs = await _context.Kurslar.ToListAsync();
+            var kurs = await _context.Kurslar.Include(o => o.Ogretmen).ToListAsync();
             return View(kurs);
         }
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.Ogretmenler = new SelectList(await _context.Ogretmenler.ToListAsync(), "OgretmenId", "AdSoyad");
             return View();
         }
         [HttpPost]
@@ -36,20 +39,23 @@ namespace efcoreApp.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Ogretmenler = new SelectList(await _context.Ogretmenler.ToListAsync(), "OgretmenId", "AdSoyad");
             var kurs = await _context
             .Kurslar
             .Include(o => o.KursKayitlari)
             .ThenInclude(o => o.Ogrenci)
+            .Include(o => o.Ogretmen)
             .FirstOrDefaultAsync(o => o.KursId == id);
             if (kurs == null)
             {
                 return NotFound();
             }
+            ViewBag.Ogretmenler = new SelectList(await _context.Ogretmenler.ToListAsync(), "OgretmenId", "AdSoyad");
             return View(kurs);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int? id, Kurs model)
+        public async Task<IActionResult> Edit(int? id, KursViewModel model)
         {
             if (id != model.KursId)
             {
@@ -57,11 +63,9 @@ namespace efcoreApp.Controllers
             }
             if (ModelState.IsValid)
             {
-
-
                 try
                 {
-                    _context.Kurslar.Update(model);
+                    _context.Kurslar.Update(new Kurs() { KursId = model.KursId, Baslik = model.Baslik, OgretmenId = model.OgretmenId });
                     await _context.SaveChangesAsync();
 
                 }

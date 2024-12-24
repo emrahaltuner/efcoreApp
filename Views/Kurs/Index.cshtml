@@ -7,6 +7,7 @@
             <tr>
                 <th style="width: 150px;">@Html.DisplayNameFor(m=>m.KursId)</th>
                 <th>@Html.DisplayNameFor(m=>m.Baslik)</th>
+                <th>@Html.DisplayNameFor(m=>m.Ogretmen.AdSoyad)</th>
 
                 <th style="width: 150px;">Action</th>
 
@@ -17,7 +18,8 @@
             {
             <tr>
                 <td>@kurs.KursId</td>
-                <td>@kurs.Baslik</td>
+                <td>@kurs.Baslik </td>
+                <td>@kurs.Ogretmen.AdSoyad</td>
 
                 <td>
                     <a asp-controller="Kurs" asp-action="Edit" asp-route-id="@kurs.KursId"

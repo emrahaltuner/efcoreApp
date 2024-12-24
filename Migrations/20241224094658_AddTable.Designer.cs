@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using efcoreApp.Data;
 
@@ -10,9 +11,11 @@ using efcoreApp.Data;
 namespace efcoreApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241224094658_AddTable")]
+    partial class AddTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -26,7 +29,7 @@ namespace efcoreApp.Migrations
                     b.Property<string>("Baslik")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("OgretmenId")
+                    b.Property<int?>("OgretmenId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("KursId");
@@ -111,13 +114,9 @@ namespace efcoreApp.Migrations
 
             modelBuilder.Entity("efcoreApp.Data.Kurs", b =>
                 {
-                    b.HasOne("efcoreApp.Data.Ogretmen", "Ogretmen")
+                    b.HasOne("efcoreApp.Data.Ogretmen", null)
                         .WithMany("Kurslar")
-                        .HasForeignKey("OgretmenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ogretmen");
+                        .HasForeignKey("OgretmenId");
                 });
 
             modelBuilder.Entity("efcoreApp.Data.KursKayit", b =>

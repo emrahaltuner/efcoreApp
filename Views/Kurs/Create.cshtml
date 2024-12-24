@@ -9,6 +9,13 @@ ViewData["Title"] = "Kurs Kayıt";
             <label asp-for="Baslik" class="form-label">Kurs Başlık</label>
             <input asp-for="Baslik" class="form-control">
         </div>
+        <div class="mb-3">
+            <label asp-for="OgretmenId" class="form-label">Kurs Başlık</label>
+            <select asp-for="OgretmenId" asp-items="ViewBag.Ogretmenler" class="form-select">
+                <option value="">Kurs Öğretmeni Seçin</option>
+            </select>
+        </div>
+
 
         <button type="submit" class="btn btn-secondary">Ekle</button>
     </form>
